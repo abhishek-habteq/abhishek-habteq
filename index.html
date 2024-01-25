@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Current Projects</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Current Projects</h2>
+    <ul id="pageList" class="list-group"></ul>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetchPageList();
+    });
+
+    async function fetchPageList() {
+        const response = await fetch('pages.json');
+        const data = await response.json();
+
+        const pageListContainer = document.getElementById('pageList');
+        pageListContainer.innerHTML = '';
+
+        data.forEach(page => {
+            const listItem = document.createElement('li');
+            listItem.classList.add('list-group-item');
+            
+            const link = document.createElement('a');
+            link.href = page.url;
+            link.target = "_blank";
+            link.textContent = page.title;
+
+            listItem.appendChild(link);
+            pageListContainer.appendChild(listItem);
+        });
+    }
+</script>
+
+</body>
+</html>
