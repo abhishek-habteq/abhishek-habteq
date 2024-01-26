@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://abhishekbaiju.netlify.app/me.png"/>
+    <title>Random User Generator</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        font-family: sans-serif;
+      }
+
+      #app {
+        width: 400px;
+        height: 100vh;
+        margin: auto;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h1,
+      h3 {
+        margin-bottom: 1rem;
+        font-weight: normal;
+      }
+
+      img {
+        border-radius: 50%;
+        border: 5px #333 solid;
+        margin-bottom: 1rem;
+      }
+
+      .male {
+        border-color: steelblue;
+        background-color: steelblue;
+      }
+
+      .female {
+        border-color: pink;
+        background-color: pink;
+        color: #333;
+      }
+
+      button {
+        cursor: pointer;
+        display: inline-block;
+        background: #333;
+        color: white;
+        font-size: 18px;
+        border: 0;
+        padding: 1rem 1.5rem;
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      button:hover {
+        transform: scale(0.98);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <img :class="gender" v-bind:src="picture" :alt="`${fname} ${lname}`">
+      <h1>{{fname}} {{lname}}</h1>
+      <h3>Email: {{email}}</h3>
+      <button v-on:click="genuser" :class="gender">Generate</button>
+    </div>
+    <script src="https://unpkg.com/vue@3.0.5"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            fname: 'Abhishek',
+            lname: 'Baiju',
+            email: 'abhishek@gmail.com',
+            gender: 'male',
+            picture: 'https://abhishekbaiju.github.io/assets/images/untitled-1-128x128.png',
+          }
+        },
+        methods: {
+          async genuser() {
+            const res = await fetch('https://randomuser.me/api')
+            const {
+              results
+            } = await res.json()
+            console.log(results)
+            this.fname = results[0].name.first
+            this.lname = results[0].name.last
+            this.email = results[0].email
+            this.gender = results[0].gender
+            this.picture = results[0].picture.large
+          }
+        }
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>

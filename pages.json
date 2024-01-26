@@ -1,4 +1,6 @@
 [
     {"title": "ToDo app using Vue CDN", "url": "todo/"},
-    {"title": "Pizza", "url": "pizza/"}
+    {"title": "Pizza", "url": "pizza/"},
+    {"title": "Random User Generator using Vue CDN and randomuser API", "url": "user/"}
+
 ]
